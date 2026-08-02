@@ -19,6 +19,6 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { level: 3, name: '猜數字' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 3, name: '注音校正器' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 3, name: '多人連線卡牌對戰網頁遊戲' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { level: 3, name: '多人連線卡牌對戰網頁遊戲' })).not.toBeInTheDocument()
   })
 })

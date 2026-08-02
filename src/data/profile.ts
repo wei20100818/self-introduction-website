@@ -31,15 +31,6 @@ export const profile = {
       imageAlt: '注音校正器的 Chrome 線上應用程式商店預覽',
     },
     {
-      id: '2pick-simulator',
-      kind: 'external',
-      title: '多人連線卡牌對戰網頁遊戲',
-      description: '以 2-Pick 選牌與卡牌對戰為主題的多人連線網頁作品，提供新連線、房號驗證、玩家暱稱與開始選牌入口。',
-      url: 'https://2pick-try-1.shadowverse2pick.workers.dev/',
-      image: 'images/projects/2pick-simulator.png',
-      imageAlt: '2-Pick Simulator 的多人連線起始畫面預覽',
-    },
-    {
       id: 'neon-snake',
       kind: 'internal',
       title: '貪食蛇',

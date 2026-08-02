@@ -28,7 +28,7 @@ describe('ECPay helpers', () => {
 
     expect(actual).toBe('6C51C9E6888DE861FD62FB1DD17029FC742634498FD813DC43D4243B5685B840')
     expect(checkMacValueIsValid({ ...parameters, CheckMacValue: actual }, hashKey, hashIv)).toBe(true)
-    expect(checkMacValueIsValid({ ...parameters, CheckMacValue: `${actual.slice(0, -1)}0` }, hashKey, hashIv)).toBe(false)
+    expect(checkMacValueIsValid({ ...parameters, CheckMacValue: `0${actual.slice(1)}` }, hashKey, hashIv)).toBe(false)
   })
 
   it('uses Taiwan time and creates a short alphanumeric merchant order number', () => {

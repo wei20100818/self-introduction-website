@@ -1,5 +1,5 @@
 interface ProjectBase {
-  id: 'guess-number' | 'zhuyin-correction-tool' | '2pick-simulator' | 'neon-snake'
+  id: 'guess-number' | 'zhuyin-correction-tool' | 'neon-snake'
   title: string
   description: string
   image: string
