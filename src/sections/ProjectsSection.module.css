@@ -31,6 +31,11 @@
   grid-column: 3 / span 8;
 }
 
+.project:nth-child(4) {
+  grid-column: 5 / span 8;
+  margin-top: var(--space-6);
+}
+
 .project:hover {
   border-color: var(--color-border-strong);
   background: var(--color-surface);

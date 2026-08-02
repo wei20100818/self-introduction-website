@@ -16,8 +16,14 @@ export interface Translation {
   navigation: Record<NavigationId, string>
   hero: {
     eyebrow: string
+    title: string
+    description: string
     primaryAction: string
     secondaryAction: string
+    featuredLabel: string
+    featuredCategory: string
+    featuredAction: string
+    disciplines: string
   }
   about: {
     eyebrow: string

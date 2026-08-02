@@ -1,0 +1,140 @@
+.card {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 44%, var(--color-border-subtle));
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 14%, var(--color-surface)), var(--color-surface));
+  box-shadow: var(--shadow-card);
+}
+
+.eyebrow {
+  margin: 0 0 0.7rem;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.card h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: clamp(1.6rem, 4vw, 2.35rem);
+}
+
+.description {
+  max-width: 54ch;
+  margin: 0.9rem 0 1.5rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+.amounts {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.amounts legend {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.amountButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.amountButtons button {
+  min-height: 2.7rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.amountButtons button:hover,
+.amountButtons button:focus-visible,
+.amountButtons .selected {
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+.amountButtons .selected {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.customAmount {
+  display: grid;
+  gap: 0.4rem;
+  max-width: 15rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.customAmount input {
+  min-height: 2.75rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0.7rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.minimum,
+.error,
+.success {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.minimum {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.submit {
+  width: 100%;
+  min-height: 3rem;
+  margin-top: 1.25rem;
+  border: 0;
+  border-radius: 0.8rem;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.submit:hover,
+.submit:focus-visible {
+  filter: brightness(1.08);
+  outline: 3px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  outline-offset: 3px;
+}
+
+.error {
+  margin-top: 0.8rem;
+  color: var(--color-danger);
+}
+
+.success {
+  margin: 0 0 1rem;
+  color: var(--color-accent-strong);
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .amountButtons button {
+    flex: 1 1 calc(50% - 0.65rem);
+  }
+}

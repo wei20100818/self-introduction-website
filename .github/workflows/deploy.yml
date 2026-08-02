@@ -37,6 +37,8 @@ jobs:
         run: npm ci
 
       - name: Build website
+        env:
+          VITE_PAYMENT_API_ORIGIN: ${{ vars.VITE_PAYMENT_API_ORIGIN }}
         run: npm run build
 
       - name: Configure GitHub Pages

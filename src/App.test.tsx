@@ -7,7 +7,7 @@ describe('App', () => {
   it('renders the four required portfolio sections', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { level: 1, name: '王宥崴' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: /把好奇心/ })).toBeInTheDocument()
     expect(document.getElementById('home')).toBeInTheDocument()
     expect(document.getElementById('about')).toBeInTheDocument()
     expect(document.getElementById('projects')).toBeInTheDocument()

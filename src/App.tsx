@@ -7,12 +7,15 @@ import { SiteFooter } from './components/layout/SiteFooter'
 import { SiteHeader } from './components/layout/SiteHeader'
 import { profile } from './data/profile'
 import { useActiveSection } from './hooks/useActiveSection'
+import { useSnakeRoute } from './hooks/useSnakeRoute'
 import { useStoredPreference } from './hooks/useStoredPreference'
 import { DEFAULT_LOCALE, translations } from './i18n/translations'
 import { AboutSection } from './sections/AboutSection'
 import { ContactSection } from './sections/ContactSection'
 import { HomeSection } from './sections/HomeSection'
 import { ProjectsSection } from './sections/ProjectsSection'
+import { SupportSection } from './sections/SupportSection'
+import { SnakeGamePage } from './pages/SnakeGamePage'
 import type { Locale } from './types/translation'
 import styles from './App.module.css'
 
@@ -35,16 +38,22 @@ function App() {
   const copy = translations[locale]
   const activeSection = useActiveSection(navigationIds)
   const reduceMotion = useReducedMotion()
+  const snakeRouteActive = useSnakeRoute()
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme
+    const effectiveTheme = snakeRouteActive ? 'light' : theme
+    document.documentElement.dataset.theme = effectiveTheme
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
-    if (themeColor) themeColor.content = theme === 'dark' ? '#09121a' : '#f5f9fc'
-  }, [theme])
+    if (themeColor) themeColor.content = effectiveTheme === 'dark' ? '#09121a' : '#f5f9fc'
+  }, [snakeRouteActive, theme])
 
   useEffect(() => {
     document.documentElement.lang = locale === 'zh-TW' ? 'zh-Hant' : 'en'
   }, [locale])
+
+  if (snakeRouteActive) {
+    return <SnakeGamePage />
+  }
 
   return (
     <div className={styles.siteShell}>
@@ -69,9 +78,10 @@ function App() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: motionDuration.normal, ease: motionEase }}
       >
-        <AboutSection copy={copy.about} sectionId="home" />
-        <HomeSection profile={profile} copy={copy.hero} sectionId="about" theme={theme} />
+        <HomeSection profile={profile} copy={copy.hero} sectionId="home" theme={theme} />
+        <AboutSection copy={copy.about} sectionId="about" />
         <ProjectsSection copy={copy.projects} commonCopy={copy.common} />
+        <SupportSection locale={locale} />
         <ContactSection copy={copy.contact} validationCopy={copy.validation} recipient={profile.contactEmail} />
       </motion.main>
       <SiteFooter name={profile.name} copy={copy.footer} />

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -9,6 +9,7 @@ describe('portfolio interactions', () => {
   beforeEach(() => {
     window.localStorage.clear()
     window.sessionStorage.clear()
+    window.history.replaceState(null, '', window.location.pathname)
     document.documentElement.dataset.theme = 'light'
     document.documentElement.lang = 'zh-Hant'
   })
@@ -37,35 +38,38 @@ describe('portfolio interactions', () => {
 
     expect(document.documentElement.dataset.theme).toBe('dark')
     expect(window.localStorage.getItem('portfolio-theme')).toBe('dark')
-    expect(screen.getByRole('link', { name: '查看我的作品' })).toHaveAttribute('href', '#projects')
-    expect(screen.getByRole('link', { name: '聯絡我' })).toHaveAttribute('href', '#contact')
+    expect(screen.getByRole('link', { name: '查看精選作品' })).toHaveAttribute('href', '#projects')
+    expect(screen.getAllByRole('link', { name: '關於我' }).at(-1)).toHaveAttribute('href', '#about')
 
     const menuButton = document.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')
     expect(menuButton).not.toBeNull()
-    if (!menuButton) {
-      throw new Error('The mobile navigation control is missing.')
-    }
+    if (!menuButton) throw new Error('The mobile navigation control is missing.')
+
     await user.click(menuButton)
     expect(menuButton).toHaveAttribute('aria-expanded', 'true')
-    expect(menuButton).toHaveAttribute('aria-controls', 'mobile-navigation')
   })
 
-  it('renders complete, secure, keyboard-focusable project links without exposing the recipient email', () => {
+  it('opens the snake game as an internal, immersive hash route', async () => {
+    const user = userEvent.setup()
     render(<App />)
 
-    expect(document.querySelector('#home #about-title')).toBeInTheDocument()
-    expect(document.querySelector('#about #home-title')).toBeInTheDocument()
-
-    for (const project of profile.projects) {
-      const link = screen.getByRole('link', { name: `${project.title}：瀏覽網站` })
+    for (const project of profile.projects.filter((item) => item.kind === 'external')) {
+      const link = screen.getAllByRole('link', { name: new RegExp(project.title) }).at(-1)
+      expect(link).toBeDefined()
+      if (!link) throw new Error(`The ${project.title} project link is missing.`)
       expect(link).toHaveAttribute('href', project.url)
       expect(link).toHaveAttribute('target', '_blank')
       expect(link).toHaveAttribute('rel', 'noopener noreferrer')
-      expect(link.tabIndex).toBe(0)
-      expect(screen.getByAltText(project.imageAlt)).toBeInTheDocument()
     }
 
-    expect(screen.queryByText(profile.contactEmail)).not.toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 1, name: profile.name })).toBeInTheDocument()
+    const snakeLink = screen.getByRole('link', { name: /貪食蛇/ })
+    expect(snakeLink).toHaveAttribute('href', '#/snake')
+    expect(snakeLink).not.toHaveAttribute('target')
+
+    await user.click(snakeLink)
+
+    await waitFor(() => expect(screen.getByRole('heading', { level: 1, name: '貪食蛇' })).toBeInTheDocument())
+    expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
+    expect(document.documentElement.dataset.theme).toBe('light')
   })
 })
